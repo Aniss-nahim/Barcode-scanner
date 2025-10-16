@@ -23,6 +23,11 @@
             "assets": [
               {
                 "glob": "**/*",
+                "input": "./node_modules/scanbot-web-sdk/bundle/bin/barcode-scanner/",
+                "output": "wasm/"
+              },
+              {
+                "glob": "**/*",
                 "input": "public"
               }
             ],
@@ -92,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
