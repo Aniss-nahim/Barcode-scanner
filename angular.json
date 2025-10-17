@@ -19,8 +19,15 @@
             "polyfills": [
               "zone.js"
             ],
+            "externalDependencies": [
+              "scanbot-web-sdk/@types"
+            ],
+            "allowedCommonJsDependencies": [
+              "scanbot-web-sdk"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "./node_modules/scanbot-web-sdk/bundle/bin/barcode-scanner/",
@@ -41,13 +48,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2000kB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"
