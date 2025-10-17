@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import ScanbotSDK from 'scanbot-web-sdk';
-import { UIConfig } from 'scanbot-web-sdk/@types';
 
 @Injectable({providedIn: 'root'})
 export class ScanbotSDKService {
@@ -11,7 +10,7 @@ export class ScanbotSDKService {
         if (this.sdk) return this.sdk;
         this.sdk = await ScanbotSDK.initialize({
             licenseKey:  environment.scanbotSdkLicenseKey,
-            enginePath: '/wasm/',
+            enginePath: 'wasm/',
         });
         console.log('Scanbot SDK initialized (singleton)');
         return this.sdk;
@@ -24,7 +23,7 @@ export class ScanbotSDKService {
     public async checkLicense(): Promise<boolean> {
         const sdk = await this.initSdk();
         const licenseInfo = await sdk.getLicenseInfo();
-        console.log("Lisence : ", licenseInfo);
+        console.log("License : ", licenseInfo);
         return licenseInfo.isValid();
     }
 
@@ -33,8 +32,8 @@ export class ScanbotSDKService {
      * @param
      * @returns {void}
      */
-    private setSignalScanUseCase(config: UIConfig.BarcodeScannerScreenConfiguration): void {
-        const useCase = new UIConfig.SingleScanningMode();
+    private setSignalScanUseCase(config: InstanceType<typeof ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration>): void {
+        const useCase = new ScanbotSDK.UI.Config.SingleScanningMode();
         useCase.confirmationSheetEnabled = true;
         useCase.sheetColor = "#FFFFFF";
         // Hide/unhide the barcode image.
@@ -60,7 +59,7 @@ export class ScanbotSDKService {
      * Set palette configuration
      * @param config 
      */
-    private setPaletteConfig(config: UIConfig.BarcodeScannerScreenConfiguration) {
+    private setPaletteConfig(config: InstanceType<typeof ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration>) {
         config.palette.sbColorPrimary = "#C8193C";
         config.palette.sbColorPrimaryDisabled = "#F5F5F5";
         config.palette.sbColorNegative = "#FF3737";
@@ -80,7 +79,7 @@ export class ScanbotSDKService {
     }
 
 
-    private setTopBar(config: UIConfig.BarcodeScannerScreenConfiguration) {
+    private setTopBar(config: InstanceType<typeof ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration>) {
         // Set the top bar mode.
         config.topBar.mode = "GRADIENT";
         // Set the background color which will be used as a gradient.
@@ -91,7 +90,7 @@ export class ScanbotSDKService {
     }
 
 
-    private setActionBar(config: UIConfig.BarcodeScannerScreenConfiguration) {
+    private setActionBar(config: InstanceType<typeof ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration>) {
         config.actionBar.flashButton.visible = true;
         // Configure the inactive state of the flash button.
         config.actionBar.flashButton.backgroundColor = "#0000007A";
@@ -114,7 +113,7 @@ export class ScanbotSDKService {
      * Set User guidance configuration
      * @param config 
      */
-    private setUserGuidanceConfig(config: UIConfig.BarcodeScannerScreenConfiguration) {
+    private setUserGuidanceConfig(config: InstanceType<typeof ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration>) {
         // Hide/unhide the user guidance.
         config.userGuidance.visible = true;
         // Configure the title.
@@ -128,7 +127,7 @@ export class ScanbotSDKService {
         // init sdk
         await this.initSdk();
         // configuration
-        const config = new UIConfig.BarcodeScannerScreenConfiguration();
+        const config = new ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration();
         config.scannerConfiguration.barcodeFormats = ['CODE_128'];
         this.setSignalScanUseCase(config);
         this.setPaletteConfig(config);
